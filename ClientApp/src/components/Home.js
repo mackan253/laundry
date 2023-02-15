@@ -62,6 +62,7 @@ const Home = () => {
       <div>
       <Button onClick={handleBackwardClick} disabled={endpoint === '/api/weeks/range/0/69'}>Backward</Button>
       <Button onClick={handleForwardClick} disabled={endpoint === '/api/weeks/range/210/279'}>Forward</Button>
+      <p>gu</p>
       </div>
       <div className="table-responsive">
         <Table bordered>
