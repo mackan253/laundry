@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import { Layout } from './components/Layout';
 import  Home  from './components/Home';
 import { FetchData } from './components/FetchData';
-import { Counter } from './components/Counter';
+import  Login  from './components/Login';
+import  CreateUser  from './components/admin/CreateUser';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,8 +23,10 @@ export default class App extends Component {
       <Layout>
 
         <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
+        <Route path='/Login' component={Login} />
         <Route path='/fetch-data' component={FetchData} />
+        <Route path='/CreateUser' component={CreateUser} />
+
 
       </Layout>
     );

@@ -6,5 +6,9 @@ namespace laundry.Data {
         public MyDbContext (DbContextOptions<MyDbContext> options) : base (options) { }
 
         public DbSet<Week> Weeks { get; set; }
+
+        public DbSet<User> User { get; set; }
+
+        public DbSet<Admin> Admin { get; set; }
     }
 }
