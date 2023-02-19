@@ -8,8 +8,8 @@ using laundry.Data;
 namespace laundry.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20230216162354_AddAdminIdentity")]
-    partial class AddAdminIdentity
+    [Migration("20230217141004_AddUser")]
+    partial class AddUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
