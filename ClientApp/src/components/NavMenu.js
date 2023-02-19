@@ -1,49 +1,85 @@
-import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import './NavMenu.css';
+import React, { useState, useEffect } from "react";
+import {
+  Collapse,
+  Container,
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
+  NavItem,
+  NavLink,
+} from "reactstrap";
+import { Link, useHistory } from "react-router-dom";
+import "./NavMenu.css";
 
-export class NavMenu extends Component {
-  static displayName = NavMenu.name;
+const NavMenu = () => {
+  const [collapsed, setCollapsed] = useState(true);
+  const [username, setUsername] = useState("");
+  const history = useHistory();
 
-  constructor (props) {
-    super(props);
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    setUsername(storedUsername);
+  }, []);
 
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-      collapsed: true
-    };
-  }
+  const toggleNavbar = () => setCollapsed(!collapsed);
 
-  toggleNavbar () {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    history.push("/login");
+    window.location.reload();
+  };
 
-  render () {
-    return (
-      <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
-          <Container>
-            <NavbarBrand tag={Link} to="/">laundry</NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
-            <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
-              <ul className="navbar-nav flex-grow">
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+  return (
+    <header>
+      <Navbar
+        className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3"
+        light
+      >
+        <Container>
+          <NavbarBrand tag={Link} to="/">
+            Laundry
+          </NavbarBrand>
+          <NavbarToggler onClick={toggleNavbar} className="mr-2" />
+          <Collapse
+            className="d-sm-inline-flex flex-sm-row-reverse"
+            isOpen={!collapsed}
+            navbar
+          >
+            <ul className="navbar-nav flex-grow">
+            {username && (
+                <NavItem className="mr-5">
+                  <span className="navbar-text">Logged in as: {username}</span>
                 </NavItem>
+              )}
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/">
+                  Home
+                </NavLink>
+              </NavItem>
+              {!username && (
+              <NavItem>
+                <NavLink tag={Link} className="text-dark" to="/Login">
+                  Login
+                </NavLink>
+              </NavItem>
+              )}          
+              {username && (
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/Login">Login</NavLink>
+                  <NavLink
+                    tag={Link}
+                    className="text-dark"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/fetch-data">Fetch data</NavLink>
-                </NavItem>
-              </ul>
-            </Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    );
-  }
-}
+              )}
+            </ul>
+          </Collapse>
+        </Container>
+      </Navbar>
+    </header>
+  );
+};
+
+export default NavMenu;

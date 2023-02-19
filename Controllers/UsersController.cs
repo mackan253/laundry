@@ -84,6 +84,21 @@ namespace laundry.Controllers
             return CreatedAtAction("GetUser", new { id = user.id }, user);
         }
 
+        [HttpPost("auth")]
+        public async Task<ActionResult<User>> AuthUser(User user)
+        {
+             Console.WriteLine($"Received auth request for username '{user.username}' and password '{user.password}'");
+            var authUser = await _context.User.FirstOrDefaultAsync(u => u.username == user.username && u.password == user.password);
+
+            if (authUser == null)
+            {
+                return NotFound();
+            }
+            return authUser;
+        }
+
+
+
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
